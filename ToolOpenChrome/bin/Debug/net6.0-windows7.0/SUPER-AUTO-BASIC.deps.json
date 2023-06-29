@@ -1,0 +1,130 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "SUPER-AUTO-BASIC/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "Selenium.Support": "4.8.2",
+          "Selenium.WebDriver": "4.8.2",
+          "Selenium.WebDriver.ChromeDriver": "112.0.5615.2800-beta",
+          "System.Management": "8.0.0-preview.2.23128.3"
+        },
+        "runtime": {
+          "SUPER-AUTO-BASIC.dll": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
+      },
+      "Selenium.Support/4.8.2": {
+        "dependencies": {
+          "Selenium.WebDriver": "4.8.2"
+        },
+        "runtime": {
+          "lib/net6.0/WebDriver.Support.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriver/4.8.2": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net6.0/WebDriver.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriver.ChromeDriver/112.0.5615.2800-beta": {},
+      "System.CodeDom/8.0.0-preview.2.23128.3": {
+        "runtime": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.12803"
+          }
+        }
+      },
+      "System.Management/8.0.0-preview.2.23128.3": {
+        "dependencies": {
+          "System.CodeDom": "8.0.0-preview.2.23128.3"
+        },
+        "runtime": {
+          "lib/net6.0/System.Management.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "8.0.23.12803"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/System.Management.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "8.0.23.12803"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SUPER-AUTO-BASIC/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Newtonsoft.Json/13.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
+    },
+    "Selenium.Support/4.8.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tS51BJC22gQBSW2VYFAxJ7GwPQguzel41bnQyXkgoShAUO5P48lxQ83EBZe8isISjMKCDsHWOv95aUNVQaEFGA==",
+      "path": "selenium.support/4.8.2",
+      "hashPath": "selenium.support.4.8.2.nupkg.sha512"
+    },
+    "Selenium.WebDriver/4.8.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gNCaZrR32U2e9pyS+HXSqNHdcrIbqulOkcmycFoDL/tM5la4tELaZ3FpPRbq7tjJK3cKs5lLqVVFM9PfY1WW5g==",
+      "path": "selenium.webdriver/4.8.2",
+      "hashPath": "selenium.webdriver.4.8.2.nupkg.sha512"
+    },
+    "Selenium.WebDriver.ChromeDriver/112.0.5615.2800-beta": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CEOre395nJxfpHtac8EzymB4FyJIDAaouZrSTBVnpxAre4+k9X0EOZggI3TyyiCeQYwNUfJ2PCnBtcwYhSKOyQ==",
+      "path": "selenium.webdriver.chromedriver/112.0.5615.2800-beta",
+      "hashPath": "selenium.webdriver.chromedriver.112.0.5615.2800-beta.nupkg.sha512"
+    },
+    "System.CodeDom/8.0.0-preview.2.23128.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fzUdRewxS2BSwaJ0WvZxEWkSRyBxr53mx2QYC3ZmCBzdEJ0ovLTT7oQcEjWAxVd4q+gF1HZi6r+xnq5noDEzOg==",
+      "path": "system.codedom/8.0.0-preview.2.23128.3",
+      "hashPath": "system.codedom.8.0.0-preview.2.23128.3.nupkg.sha512"
+    },
+    "System.Management/8.0.0-preview.2.23128.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dUMcKYT8e+qkCktxsttkKqzd/CCEdkPk2sXJz1ZjKg76ZvZhmDUFbpIetgsotJPb1QLcmJaAVfomMpF2EDBJbA==",
+      "path": "system.management/8.0.0-preview.2.23128.3",
+      "hashPath": "system.management.8.0.0-preview.2.23128.3.nupkg.sha512"
+    }
+  }
+}
