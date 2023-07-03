@@ -404,7 +404,7 @@ namespace ToolOpenChrome
             {
                 if (a.SetRegistryMac(mac))
                 {
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
         }
@@ -428,6 +428,7 @@ namespace ToolOpenChrome
         {
             start_RunTask();
         }
+        int count_TaskRun = 0;
         private void start_RunTask()
         {
             idItemStart = idLvChecked;
@@ -790,9 +791,36 @@ namespace ToolOpenChrome
                     }
                     else
                     {
-                        while (true)
+                        count_TaskRun++;
+                        if (count_TaskRun == 3)
                         {
-                            start_RunTask();
+                            lvDSTK.Invoke((MethodInvoker)delegate
+                            {
+                                selectedItem.SubItems[5].Text = "Vui lòng thử lại";
+                            });
+                        }
+                        else
+                        {
+                            lvDSTK.Invoke((MethodInvoker)delegate
+                            {
+                                selectedItem.SubItems[5].Text = string.Format("Lỗi proxy và chạy lại lần {0}", count_TaskRun);
+                            });
+                        }
+                        Thread.Sleep(2000);
+
+                        if (count_TaskRun < 3)
+                        {
+                            if (lvDSTK.InvokeRequired)
+                            {
+                                lvDSTK.Invoke((MethodInvoker)delegate
+                                {
+                                    start_RunTask();
+                                });
+                            }
+                            else
+                            {
+                                start_RunTask();
+                            }
                         }
                     }
                     Invoke((MethodInvoker)delegate
@@ -1133,6 +1161,23 @@ namespace ToolOpenChrome
                 {
                     int firstCheckedId = checkedIds[0];
                     idLvChecked = firstCheckedId;
+                }
+            }
+        }
+
+        private void btnSearchAccount_Click(object sender, EventArgs e)
+        {
+            string accountName = txtSearchAccount.Text;
+            foreach (ListViewItem item in lvDSTK.Items)
+            {
+                if (accountName == item.SubItems[2].Text)
+                {
+                    txtSearchAccountSuccess.Text = item.SubItems[1].Text;
+                    break;
+                }
+                else
+                {
+                    txtSearchAccountSuccess.Text = "Không tìm thấy";
                 }
             }
         }

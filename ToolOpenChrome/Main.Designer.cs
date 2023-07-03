@@ -58,8 +58,16 @@
             deleteAllAcc = new ToolStripMenuItem();
             deleteAccSelect = new ToolStripMenuItem();
             ctmn_RefreshData = new ToolStripMenuItem();
+            groupBox2 = new GroupBox();
+            btnSearchAccountFileTxt = new Button();
+            txtSearchAccountSuccess = new TextBox();
+            label2 = new Label();
+            btnSearchAccount = new Button();
+            txtSearchAccount = new TextBox();
+            label1 = new Label();
             groupBox1.SuspendLayout();
             click_mouseRight.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -72,7 +80,7 @@
             groupBox1.Controls.Add(btnStart);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox1.ForeColor = SystemColors.ButtonFace;
-            groupBox1.Location = new Point(12, 300);
+            groupBox1.Location = new Point(12, 345);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(719, 65);
             groupBox1.TabIndex = 1;
@@ -289,12 +297,83 @@
             ctmn_RefreshData.Text = "Tải lại dữ liệu";
             ctmn_RefreshData.Click += ctmn_RefreshData_Click;
             // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = Color.Transparent;
+            groupBox2.Controls.Add(btnSearchAccountFileTxt);
+            groupBox2.Controls.Add(txtSearchAccountSuccess);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(btnSearchAccount);
+            groupBox2.Controls.Add(txtSearchAccount);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox2.ForeColor = Color.White;
+            groupBox2.Location = new Point(12, 295);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(719, 44);
+            groupBox2.TabIndex = 3;
+            groupBox2.TabStop = false;
+            // 
+            // btnSearchAccountFileTxt
+            // 
+            btnSearchAccountFileTxt.ForeColor = Color.Black;
+            btnSearchAccountFileTxt.Location = new Point(435, 14);
+            btnSearchAccountFileTxt.Name = "btnSearchAccountFileTxt";
+            btnSearchAccountFileTxt.Size = new Size(75, 23);
+            btnSearchAccountFileTxt.TabIndex = 5;
+            btnSearchAccountFileTxt.Text = "File.txt";
+            btnSearchAccountFileTxt.UseVisualStyleBackColor = true;
+            // 
+            // txtSearchAccountSuccess
+            // 
+            txtSearchAccountSuccess.Location = new Point(570, 14);
+            txtSearchAccountSuccess.Name = "txtSearchAccountSuccess";
+            txtSearchAccountSuccess.Size = new Size(131, 23);
+            txtSearchAccountSuccess.TabIndex = 4;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(533, 18);
+            label2.Name = "label2";
+            label2.Size = new Size(31, 15);
+            label2.TabIndex = 3;
+            label2.Text = "STT:";
+            // 
+            // btnSearchAccount
+            // 
+            btnSearchAccount.ForeColor = Color.Black;
+            btnSearchAccount.Location = new Point(354, 14);
+            btnSearchAccount.Name = "btnSearchAccount";
+            btnSearchAccount.Size = new Size(75, 22);
+            btnSearchAccount.TabIndex = 2;
+            btnSearchAccount.Text = "Tìm kiếm";
+            btnSearchAccount.UseVisualStyleBackColor = true;
+            btnSearchAccount.Click += btnSearchAccount_Click;
+            // 
+            // txtSearchAccount
+            // 
+            txtSearchAccount.Location = new Point(110, 14);
+            txtSearchAccount.Name = "txtSearchAccount";
+            txtSearchAccount.Size = new Size(238, 23);
+            txtSearchAccount.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(19, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(85, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Tìm tài khoản:";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(743, 376);
+            ClientSize = new Size(743, 424);
+            Controls.Add(groupBox2);
             Controls.Add(lvDSTK);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -302,11 +381,13 @@
             MaximizeBox = false;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "SUPER-AUTO-BASIC  /v1.0.7/";
+            Text = "SUPER-AUTO-BASIC  /v1.0.8/";
             FormClosing += FormMain_FormClosing;
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             click_mouseRight.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -339,5 +420,12 @@
         private ToolStripMenuItem deleteAllAcc;
         private ToolStripMenuItem deleteAccSelect;
         private ToolStripMenuItem ctmn_RefreshData;
+        private GroupBox groupBox2;
+        private TextBox txtSearchAccountSuccess;
+        private Label label2;
+        private Button btnSearchAccount;
+        private TextBox txtSearchAccount;
+        private Label label1;
+        private Button btnSearchAccountFileTxt;
     }
 }

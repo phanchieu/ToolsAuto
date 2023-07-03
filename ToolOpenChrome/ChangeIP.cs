@@ -48,6 +48,7 @@ namespace ToolOpenChrome
             {
                 MessageBox.Show("Đã được lưu thành công!");
                 //Console.WriteLine("File đã được lưu thành công!");
+                this.Close();
             }
             else
             {
