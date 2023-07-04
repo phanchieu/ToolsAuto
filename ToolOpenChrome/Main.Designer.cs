@@ -323,6 +323,7 @@
             btnSearchAccountFileTxt.TabIndex = 5;
             btnSearchAccountFileTxt.Text = "File.txt";
             btnSearchAccountFileTxt.UseVisualStyleBackColor = true;
+            btnSearchAccountFileTxt.Click += btnSearchAccountFileTxt_Click;
             // 
             // txtSearchAccountSuccess
             // 
@@ -381,7 +382,7 @@
             MaximizeBox = false;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "SUPER-AUTO-BASIC  /v1.0.8/";
+            Text = "SUPER-AUTO-BASIC  /v1.0.9/";
             FormClosing += FormMain_FormClosing;
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);

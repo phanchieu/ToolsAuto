@@ -281,6 +281,7 @@ namespace ToolOpenChrome
         }
 
         //
+        private List<string> notFound;
 
         private List<Thread> runningThreads = new List<Thread>();
         public FormMain()
@@ -1170,7 +1171,7 @@ namespace ToolOpenChrome
             string accountName = txtSearchAccount.Text;
             foreach (ListViewItem item in lvDSTK.Items)
             {
-                if (accountName == item.SubItems[2].Text)
+                if (accountName.Trim() == item.SubItems[2].Text)
                 {
                     txtSearchAccountSuccess.Text = item.SubItems[1].Text;
                     break;
@@ -1178,6 +1179,62 @@ namespace ToolOpenChrome
                 else
                 {
                     txtSearchAccountSuccess.Text = "Không tìm thấy";
+                }
+            }
+        }
+
+        private void btnSearchAccountFileTxt_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            openFileDialog.Title = "Select a Text File";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                // Đọc danh sách tên tài khoản từ tệp tin đã chọn
+                string[] accountNames = File.ReadAllLines(filePath);
+
+                // Thiết lập mảng notFound
+                notFound = new List<string>();
+
+                // Duyệt qua các tên tài khoản và tìm kiếm trên ListView
+                foreach (string accountName in accountNames)
+                {
+                    bool found = false;
+
+                    // Tìm kiếm trong ListView
+                    foreach (ListViewItem item in lvDSTK.Items)
+                    {
+                        if (item.SubItems[2].Text == accountName.Trim())
+                        {
+
+                            // Đánh dấu checkbox và gán giá trị Checked là true
+                            item.Checked = true;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    // Nếu không tìm thấy, thêm vào mảng notFound
+                    if (!found && accountName.Trim().Length != 0)
+                    {
+                        notFound.Add(accountName);
+                    }
+                }
+
+                // Hiển thị thông báo nếu có tên tài khoản không tìm thấy
+                if (notFound.Count > 0)
+                {
+                    string notFoundMessage = "Không tìm thấy các tài khoản sau:\n";
+                    notFoundMessage += string.Join(", ", notFound);
+                    MessageBox.Show(notFoundMessage);
+
+                    // Sao chép danh sách tài khoản không tìm thấy vào clipboard
+                    string notFoundAccounts = string.Join("\n", notFound);
+                    Clipboard.SetText(notFoundAccounts);
+                    MessageBox.Show("Đã sao chép những tài khoản không tìm thấy");
                 }
             }
         }
