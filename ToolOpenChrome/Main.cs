@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 using static ToolOpenChrome.FormMain;
 using System.Security.Cryptography;
 using OpenQA.Selenium.Support.UI;
+using System.Security.Principal;
 
 namespace ToolOpenChrome
 {
@@ -295,6 +296,7 @@ namespace ToolOpenChrome
         }
         public void LoadDataListView()
         {
+            lvDSTK.Items.Clear();
             string filePath = Path.Combine("data", "ListViewAccount.json");
 
             // Kiểm tra xem file có tồn tại hay không, nếu không thì không làm gì cả
@@ -346,7 +348,7 @@ namespace ToolOpenChrome
                     Pass = item.SubItems[3].Text,
                     Cookie = item.SubItems[4].Text,
                     Status = "",
-                    Color = Color.Black
+                    Color = item.ForeColor
                 });
             }
 
@@ -1067,11 +1069,17 @@ namespace ToolOpenChrome
         private void deleteAllAcc_Click(object sender, EventArgs e)
         {
             // Duyệt qua tất cả các item trong ListView và xóa chúng
-            for (int i = lvDSTK.Items.Count - 1; i >= 0; i--)
+            string directoryPath = "data";
+            string filePath = Path.Combine(directoryPath, "ListViewAccount.json");
+
+            // Kiểm tra xem tệp JSON đã tồn tại hay chưa
+            if (File.Exists(filePath))
             {
-                lvDSTK.Items.RemoveAt(i);
+                // Xóa tệp JSON hiện có
+                File.Delete(filePath);
             }
-            SaveDataListView();
+            //SaveDataListView();
+            LoadDataListView();
         }
         private void CapNhatId()
         {
@@ -1088,13 +1096,25 @@ namespace ToolOpenChrome
                 ListViewItem item = lvDSTK.Items[i];
                 if (item.Checked)
                 {
-                    lvDSTK.Items.Remove(item);
+                    //lvDSTK.Items.Remove(item);
+                    //MessageBox.Show(item.SubItems[1].Text);
+                    string filePath = Path.Combine("data", "ListViewAccount.json");
+                    string json = File.ReadAllText(filePath);
+                    List<AccountItem> accounts = JsonConvert.DeserializeObject<List<AccountItem>>(json);
+                    AccountItem accountToRemove = accounts.FirstOrDefault(a => a.STT == item.SubItems[1].Text);
+                    if (accountToRemove != null)
+                    {
+                        accounts.Remove(accountToRemove);
+                    }
+
+                    string updatedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
+                    File.WriteAllText(filePath, updatedJson);
                 }
             }
 
             // Cập nhật lại giá trị của cột id
             CapNhatId();
-            SaveDataListView();
+            LoadDataListView();
         }
 
         private void ctmn_RefreshData_Click(object sender, EventArgs e)
@@ -1220,7 +1240,7 @@ namespace ToolOpenChrome
                     // Nếu không tìm thấy, thêm vào mảng notFound
                     if (!found && accountName.Trim().Length != 0)
                     {
-                        notFound.Add(accountName);
+                        notFound.Add(accountName.Trim());
                     }
                 }
 
