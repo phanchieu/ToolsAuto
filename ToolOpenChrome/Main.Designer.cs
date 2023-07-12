@@ -319,7 +319,7 @@
             btnSearchAccountFileTxt.ForeColor = Color.Black;
             btnSearchAccountFileTxt.Location = new Point(435, 14);
             btnSearchAccountFileTxt.Name = "btnSearchAccountFileTxt";
-            btnSearchAccountFileTxt.Size = new Size(75, 23);
+            btnSearchAccountFileTxt.Size = new Size(75, 24);
             btnSearchAccountFileTxt.TabIndex = 5;
             btnSearchAccountFileTxt.Text = "File.txt";
             btnSearchAccountFileTxt.UseVisualStyleBackColor = true;
@@ -344,9 +344,9 @@
             // btnSearchAccount
             // 
             btnSearchAccount.ForeColor = Color.Black;
-            btnSearchAccount.Location = new Point(354, 14);
+            btnSearchAccount.Location = new Point(354, 13);
             btnSearchAccount.Name = "btnSearchAccount";
-            btnSearchAccount.Size = new Size(75, 22);
+            btnSearchAccount.Size = new Size(75, 25);
             btnSearchAccount.TabIndex = 2;
             btnSearchAccount.Text = "Tìm kiếm";
             btnSearchAccount.UseVisualStyleBackColor = true;
@@ -382,7 +382,7 @@
             MaximizeBox = false;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "SUPER-AUTO-BASIC  /v1.1.0/";
+            Text = "SUPER-AUTO-BASIC  /v1.1.1/";
             FormClosing += FormMain_FormClosing;
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);

@@ -73,9 +73,9 @@
             // 
             // btn_saveChangeIp
             // 
-            btn_saveChangeIp.Location = new Point(160, 183);
+            btn_saveChangeIp.Location = new Point(157, 188);
             btn_saveChangeIp.Name = "btn_saveChangeIp";
-            btn_saveChangeIp.Size = new Size(75, 23);
+            btn_saveChangeIp.Size = new Size(75, 27);
             btn_saveChangeIp.TabIndex = 2;
             btn_saveChangeIp.Text = "Lưu";
             btn_saveChangeIp.UseVisualStyleBackColor = true;
@@ -83,9 +83,9 @@
             // 
             // btnCloseChangeIp
             // 
-            btnCloseChangeIp.Location = new Point(252, 183);
+            btnCloseChangeIp.Location = new Point(252, 188);
             btnCloseChangeIp.Name = "btnCloseChangeIp";
-            btnCloseChangeIp.Size = new Size(75, 23);
+            btnCloseChangeIp.Size = new Size(75, 27);
             btnCloseChangeIp.TabIndex = 3;
             btnCloseChangeIp.Text = "Thoát";
             btnCloseChangeIp.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(339, 218);
+            ClientSize = new Size(339, 227);
             Controls.Add(cb_changeMAC);
             Controls.Add(cb_changeInfoPC);
             Controls.Add(btnCloseChangeIp);
