@@ -57,9 +57,9 @@
             // 
             // btnThemTaiKhoan
             // 
-            btnThemTaiKhoan.Location = new Point(420, 207);
+            btnThemTaiKhoan.Location = new Point(420, 205);
             btnThemTaiKhoan.Name = "btnThemTaiKhoan";
-            btnThemTaiKhoan.Size = new Size(75, 23);
+            btnThemTaiKhoan.Size = new Size(75, 27);
             btnThemTaiKhoan.TabIndex = 1;
             btnThemTaiKhoan.Text = "Thêm";
             btnThemTaiKhoan.UseVisualStyleBackColor = true;

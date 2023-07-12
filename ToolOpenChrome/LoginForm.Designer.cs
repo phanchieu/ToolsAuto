@@ -66,9 +66,9 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(71, 101);
+            btnLogin.Location = new Point(71, 99);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(75, 27);
+            btnLogin.Size = new Size(75, 34);
             btnLogin.TabIndex = 3;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
@@ -116,9 +116,9 @@
             btnCopyCode.FlatAppearance.BorderSize = 0;
             btnCopyCode.FlatAppearance.MouseDownBackColor = Color.White;
             btnCopyCode.FlatAppearance.MouseOverBackColor = Color.White;
-            btnCopyCode.Location = new Point(169, 71);
+            btnCopyCode.Location = new Point(169, 69);
             btnCopyCode.Name = "btnCopyCode";
-            btnCopyCode.Size = new Size(53, 23);
+            btnCopyCode.Size = new Size(53, 25);
             btnCopyCode.TabIndex = 8;
             btnCopyCode.Text = "copy";
             btnCopyCode.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(234, 140);
+            ClientSize = new Size(234, 144);
             Controls.Add(btnCopyCode);
             Controls.Add(txtCodePc);
             Controls.Add(txtMK);

@@ -616,7 +616,8 @@ namespace ToolOpenChrome
                             "--disable-infobars",
                             "--ignore-certificate-errors",
                             "disable-popup-blocking",
-                            "--disable-infobars"
+                            "--disable-infobars",
+                            "--lang=vi"
                             );
                         options.AddExcludedArguments(new List<string> { "enable-automation", "disable-extensions", "enable-logging" });
                         options.AddUserProfilePreference("credentials_enable_service", false);
