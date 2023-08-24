@@ -1,0 +1,142 @@
+{
+  "33": {
+    "id": 1,
+    "optionSetting": 1,
+    "settingAuto": {
+      "nameAction": "33",
+      "viewPage": [
+        1.0,
+        3.0
+      ],
+      "quantityProduct": [
+        1.0,
+        1.0
+      ],
+      "sortedBy": 0,
+      "KeySearch": "tất 7 màu",
+      "IDProductSearch": [
+        "157404536.6531475583"
+      ],
+      "optionBuff": 1,
+      "viewImgProduct": false,
+      "LikeProduct": true,
+      "FollowShop": false,
+      "BuffAds": false,
+      "Likefeedback": true,
+      "viewShop": false,
+      "cbViewProductOtherBefore": false,
+      "cbViewProductOtherAfter": false,
+      "viewProductOtherBefore": 2.0,
+      "viewProductOtherAfter": 3.0
+    },
+    "settingAddress": {
+      "AddressOptions": 0,
+      "name": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "phone": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "city": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "district": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "ward": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "specificAddress": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "addressType": {
+        "random": true,
+        "type": -1
+      }
+    }
+  },
+  "12312312": {
+    "id": 2,
+    "optionSetting": 1,
+    "settingAuto": {
+      "nameAction": "12312312",
+      "viewPage": [
+        1.0,
+        10.0
+      ],
+      "quantityProduct": [
+        1.0,
+        1.0
+      ],
+      "sortedBy": 0,
+      "KeySearch": "",
+      "IDProductSearch": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "optionBuff": 1,
+      "viewImgProduct": false,
+      "LikeProduct": false,
+      "FollowShop": false,
+      "BuffAds": false,
+      "Likefeedback": false,
+      "viewShop": false,
+      "cbViewProductOtherBefore": false,
+      "cbViewProductOtherAfter": false,
+      "viewProductOtherBefore": 1.0,
+      "viewProductOtherAfter": 3.0
+    },
+    "settingAddress": {
+      "AddressOptions": 0,
+      "name": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "phone": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "city": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "district": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "ward": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "specificAddress": {
+        "random": true,
+        "fileTxt": false,
+        "text": ""
+      },
+      "addressType": {
+        "random": true,
+        "type": -1
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "Setting": {
+    "choceConfuration": "33",
+    "cbDeleteAllAddressInAccount": true,
+    "cbChoseQuantityProductOder": true,
+    "nupdownQuantityProductOder": 5.0,
+    "cbChoceShippingUnit": true,
+    "cbxChoceShippingUnit": 1
+  }
+}
