@@ -14,9 +14,9 @@
           }
         }
       },
-      "Selenium.Support/4.8.2": {
+      "Selenium.Support/4.11.0": {
         "dependencies": {
-          "Selenium.WebDriver": "4.8.2"
+          "Selenium.WebDriver": "4.11.0"
         },
         "runtime": {
           "lib/net6.0/WebDriver.Support.dll": {
@@ -25,7 +25,7 @@
           }
         }
       },
-      "Selenium.WebDriver/4.8.2": {
+      "Selenium.WebDriver/4.11.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.3"
         },
@@ -36,7 +36,7 @@
           }
         }
       },
-      "Selenium.WebDriver.ChromeDriver/112.0.5615.2800-beta": {},
+      "Selenium.WebDriver.ChromeDriver/116.0.5845.9600": {},
       "System.CodeDom/8.0.0-preview.2.23128.3": {
         "runtime": {
           "lib/net6.0/System.CodeDom.dll": {
@@ -74,26 +74,26 @@
       "path": "newtonsoft.json/13.0.3",
       "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
     },
-    "Selenium.Support/4.8.2": {
+    "Selenium.Support/4.11.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-tS51BJC22gQBSW2VYFAxJ7GwPQguzel41bnQyXkgoShAUO5P48lxQ83EBZe8isISjMKCDsHWOv95aUNVQaEFGA==",
-      "path": "selenium.support/4.8.2",
-      "hashPath": "selenium.support.4.8.2.nupkg.sha512"
+      "sha512": "sha512-PR7ssrG9peQ5AqPSNvOJ846FFOX1wSv5eV3/8zvYwf0jhNx2bEprBZbtYMSWtht+HXtC5xb6atRQLlpKD+FETQ==",
+      "path": "selenium.support/4.11.0",
+      "hashPath": "selenium.support.4.11.0.nupkg.sha512"
     },
-    "Selenium.WebDriver/4.8.2": {
+    "Selenium.WebDriver/4.11.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gNCaZrR32U2e9pyS+HXSqNHdcrIbqulOkcmycFoDL/tM5la4tELaZ3FpPRbq7tjJK3cKs5lLqVVFM9PfY1WW5g==",
-      "path": "selenium.webdriver/4.8.2",
-      "hashPath": "selenium.webdriver.4.8.2.nupkg.sha512"
+      "sha512": "sha512-V8o+Nvi9/3Ix12ZzMGg+fI7sfu+HrflZkMGq8Orr+j0INbfpEEyM6KR9oaaHlm0WUXcn7dTYwyWrJxYsi6eniw==",
+      "path": "selenium.webdriver/4.11.0",
+      "hashPath": "selenium.webdriver.4.11.0.nupkg.sha512"
     },
-    "Selenium.WebDriver.ChromeDriver/112.0.5615.2800-beta": {
+    "Selenium.WebDriver.ChromeDriver/116.0.5845.9600": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CEOre395nJxfpHtac8EzymB4FyJIDAaouZrSTBVnpxAre4+k9X0EOZggI3TyyiCeQYwNUfJ2PCnBtcwYhSKOyQ==",
-      "path": "selenium.webdriver.chromedriver/112.0.5615.2800-beta",
-      "hashPath": "selenium.webdriver.chromedriver.112.0.5615.2800-beta.nupkg.sha512"
+      "sha512": "sha512-ip8MRM/uVZxn4leTky/Sa7+Yo648lPzeR98/JCtoknq9heUFw2wMUtxdg7VIeI6RisqVUZ6UyD9/+DgkExNLdg==",
+      "path": "selenium.webdriver.chromedriver/116.0.5845.9600",
+      "hashPath": "selenium.webdriver.chromedriver.116.0.5845.9600.nupkg.sha512"
     },
     "System.CodeDom/8.0.0-preview.2.23128.3": {
       "type": "package",

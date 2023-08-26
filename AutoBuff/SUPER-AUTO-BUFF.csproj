@@ -16,9 +16,9 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Selenium.Support" Version="4.8.2" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.8.2" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="112.0.5615.2800-beta" />
+    <PackageReference Include="Selenium.Support" Version="4.11.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.11.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="116.0.5845.9600" />
     <PackageReference Include="System.Management" Version="8.0.0-preview.2.23128.3" />
   </ItemGroup>
 

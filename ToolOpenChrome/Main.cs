@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.Extensions;
 using System.IO.Compression;
 using System.Management;
 using System.Net;
@@ -595,9 +594,6 @@ namespace ToolOpenChrome
                             });
                             Thread.Sleep(2000); // Đợi 2 giây trước khi kiểm tra lại
                         }
-                        //selectedItem.SubItems[5].Text = "Mở chrome";
-                        ChromeDriverService chromeService = ChromeDriverService.CreateDefaultService("chromedriver.exe");
-                        chromeService.HideCommandPromptWindow = true;
                         if (ChangeInfoPC)
                         {
                             lvDSTK.Invoke((MethodInvoker)delegate
@@ -608,7 +604,42 @@ namespace ToolOpenChrome
                         }
                         string userAgent = randomLine;
                         string addProxy = string.Format("--proxy-server=http://{0}", TmProxy);
+
+                        //selectedItem.SubItems[5].Text = "Mở chrome";
+                        ChromeDriverService chromeService = ChromeDriverService.CreateDefaultService("chromedriver.exe");
+                        chromeService.HideCommandPromptWindow = true;
                         ChromeOptions options = new ChromeOptions();
+                        /*
+                         
+                        //string ProfilePath = "Profiles";
+                        string ProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Google","Chrome","User Data","Default");
+                        string nameProfile = "";
+                        lvDSTK.Invoke((MethodInvoker)delegate
+                        {
+                            nameProfile = selectedItem.SubItems[2].Text;
+                        });
+
+                        if (!Directory.Exists(ProfilePath))
+                        {
+                            Directory.CreateDirectory(ProfilePath);
+                        }
+                        if (Directory.Exists(ProfilePath))
+                        {
+                            //DirectoryInfo dir = new DirectoryInfo(ProfilePath);
+                            
+                            if(Directory.Exists(ProfilePath + "\\" + nameProfile))
+                            {
+                                Directory.Delete(ProfilePath + "\\" + nameProfile,true);
+                            }
+                            options.AddArgument("user-data-dir=" + ProfilePath + "\\" + nameProfile);
+                            options.AddArgument("--profile-directory=" + nameProfile);
+                        };
+
+                        options.AddArgument("user-data-dir=" + ProfilePath + "\\" + nameProfile);
+                        options.AddArgument("--profile-directory=Default");
+                         */
+                        //options.AddArgument($"user-data-dir={Directory.GetCurrentDirectory}" +"/" + nameProfile);
+                        options.AddArgument("--incognito");
                         options.AddArgument("--user-agent=" + userAgent);
                         options.AddArgument(addProxy);
                         options.AddArguments(
@@ -736,7 +767,9 @@ namespace ToolOpenChrome
                                         usernameLogin.SendKeys(username);
                                         passwordLogin.SendKeys(password);
                                         System.Threading.Thread.Sleep(3000);
-                                        btnLogin.Click();
+                                        //btnLogin.Click();
+                                        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                                        js.ExecuteScript("arguments[0].click();", btnLogin);
                                         // Nếu tìm thấy phần tử, đánh dấu và thoát khỏi vòng lặp
                                         elementFound = true;
                                     }
@@ -1134,29 +1167,77 @@ namespace ToolOpenChrome
         // update chrome
         private void btnUpdateChrome_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Vui lòng đợi cập nhật");
-            string version = string.Empty;
-            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Google\Chrome\BLBeacon"))
+            MessageBox.Show("Vui lòng đợi cập nhật...");
+
+            // Lấy phiên bản Chrome từ Registry
+            string chromeVersion = GetInstalledChromeVersion();
+
+            if (!string.IsNullOrEmpty(chromeVersion))
+            {
+                // Tìm phiên bản tương ứng của ChromeDriver dựa trên phần đầu phiên bản Chrome (chẳng hạn "91")
+                string chromeDriverVersion = GetCompatibleChromeDriverVersion(chromeVersion);
+
+                if (!string.IsNullOrEmpty(chromeDriverVersion))
+                {
+                    // Tải xuống và cài đặt ChromeDriver
+                    string chromeDriverDownloadUrl = $"https://chromedriver.storage.googleapis.com/{chromeDriverVersion}/chromedriver_win32.zip";
+                    using (WebClient client = new WebClient())
+                    {
+                        client.DownloadFile(chromeDriverDownloadUrl, "chromedriver.zip");
+                    }
+
+                    // Giải nén và thay thế ChromeDriver
+                    string chromeDriverDirectory = "chromedriver";
+                    if (Directory.Exists(chromeDriverDirectory))
+                    {
+                        Directory.Delete(chromeDriverDirectory, true);
+                    }
+                    ZipFile.ExtractToDirectory("chromedriver.zip", chromeDriverDirectory);
+
+                    MessageBox.Show($"Đã cập nhật ChromeDriver lên phiên bản {chromeDriverVersion} phù hợp với Chrome {chromeVersion}.");
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy phiên bản ChromeDriver phù hợp.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy phiên bản Chrome đã cài đặt.");
+            }
+        }
+
+        private string GetInstalledChromeVersion()
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Google\Chrome\BLBeacon"))
             {
                 if (key != null)
                 {
-                    version = key.GetValue("version").ToString();
+                    return key.GetValue("version").ToString();
                 }
             }
+            return null;
+        }
 
-            // Sử dụng phiên bản Chrome để tải xuống phiên bản tương ứng của ChromeDriver
-            string chromeDriverUrl = $"https://chromedriver.storage.googleapis.com/{version}/chromedriver_win32.zip";
-            // Tiếp tục xử lý để tải xuống và cập nhật ChromeDriver
+        private string GetCompatibleChromeDriverVersion(string chromeVersion)
+        {
+            string[] chromeVersionParts = chromeVersion.Split('.');
+            string majorVersion = chromeVersionParts[0];
+
+            string chromeDriverVersionsUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_" + majorVersion;
+
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile("https://chromedriver.storage.googleapis.com/LATEST_RELEASE", "chromedriver_version.txt");
-                string chromeDriverVersion = File.ReadAllText("chromedriver_version.txt").Trim();
-                string chromeDriverDownloadUrl = $"https://chromedriver.storage.googleapis.com/{chromeDriverVersion}/chromedriver_win32.zip";
-                client.DownloadFile(chromeDriverDownloadUrl, "chromedriver.zip");
+                try
+                {
+                    return client.DownloadString(chromeDriverVersionsUrl).Trim();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Không tìm thấy phiên bản ChromeDriver phù hợp: " + ex.Message);
+                    return null;
+                }
             }
-            MessageBox.Show("Đã cập nhật chrome xong");
-
-
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
