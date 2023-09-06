@@ -382,7 +382,7 @@
             MaximizeBox = false;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "SUPER-AUTO-BASIC  /v1.1.2/";
+            Text = "SUPER-AUTO-BASIC  /v1.1.3/";
             FormClosing += FormMain_FormClosing;
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
