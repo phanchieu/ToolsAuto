@@ -639,8 +639,8 @@ namespace ToolOpenChrome
                         options.AddArgument("--profile-directory=Default");
                          */
                         //options.AddArgument($"user-data-dir={Directory.GetCurrentDirectory}" +"/" + nameProfile);
-                        options.AddArgument("--incognito");
-                        options.AddArgument("--user-agent=" + userAgent);
+                        //options.AddArgument("--incognito");
+                        //options.AddArgument("--user-agent=" + userAgent);
                         options.AddArgument(addProxy);
                         options.AddArguments(
                             "--disable-extensions",
