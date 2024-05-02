@@ -7,17 +7,14 @@ using System.IO.Compression;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Net.NetworkInformation;
-using System.Threading;
 using System.Diagnostics;
-using System.Security.Policy;
-using System.Runtime.InteropServices;
-using static ToolOpenChrome.FormMain;
-using System.Security.Cryptography;
 using OpenQA.Selenium.Support.UI;
-using System.Security.Principal;
+using SeleniumUndetectedChromeDriver;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace ToolOpenChrome
 {
@@ -28,6 +25,7 @@ namespace ToolOpenChrome
         /// Represents a Windows network interface. Wrapper around the .NET API for network
         /// interfaces, as well as for the unmanaged device.
         /// </summary>
+        private UndetectedChromeDriver _driver;
         public class Adapter
         {
             public ManagementObject adapter;
@@ -435,9 +433,10 @@ namespace ToolOpenChrome
         {
             idItemStart = idLvChecked;
             stopRequested = false;
+            n_requset_sc = 0;
             if (lvDSTK.CheckedItems.Count > 0)
             {
-                GetProxyTm();
+                GetProxy();
                 if (n_requset_sc == 0)
                 {
                     // start program
@@ -512,10 +511,46 @@ namespace ToolOpenChrome
 
             if (!stopRequested && remainingTime == 0)
             {
-                GetProxyTm();
+                GetProxy();
                 // countdown finished, start program
                 Start();
                 //Start();
+            }
+        }
+        private void GetProxy()
+        {
+            try
+            {
+                string filePath = Path.Combine(Application.StartupPath, "setting", "ChangeIP.json");
+                if (File.Exists(filePath))
+                {
+                    // Đọc dữ liệu từ file
+                    string json = File.ReadAllText(filePath);
+
+                    // Chuyển đổi chuỗi JSON thành đối tượng JObject
+                    JObject jsonData = JObject.Parse(json);
+
+                    // Lấy giá trị của các thuộc tính
+                    if (jsonData.TryGetValue("ChoseIP", out JToken? choseIPToken))
+                    {
+                        var choseIP = choseIPToken.ToString();
+                        // Xử lý dữ liệu ở đây
+                        //MessageBox.Show(choseIP);
+                        if (choseIP == "tmproxy.com")
+                        {
+                            GetProxyTm();
+                        }
+                        else
+                        {
+                            GetWwProxy();
+                        }
+
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi, vui lòng xem lại cài đặt proxy");
             }
         }
         // start
@@ -571,7 +606,7 @@ namespace ToolOpenChrome
 
                         // Thực hiện các tác vụ khác với các thông tin lấy được
                     }
-                    if (TmProxy.Length > 0)
+                    if (ProxyIP.Length > 0 && n_requset_sc == 0)
                     {
                         lvDSTK.Invoke((MethodInvoker)delegate
                         {
@@ -603,66 +638,62 @@ namespace ToolOpenChrome
                             changeInfoUserChrome();
                         }
                         string userAgent = randomLine;
-                        string addProxy = string.Format("--proxy-server=http://{0}", TmProxy);
+                        string addProxy = string.Format("--proxy-server=http://{0}", ProxyIP);
 
-                        //selectedItem.SubItems[5].Text = "Mở chrome";
-                        ChromeDriverService chromeService = ChromeDriverService.CreateDefaultService("chromedriver.exe");
-                        chromeService.HideCommandPromptWindow = true;
-                        ChromeOptions options = new ChromeOptions();
-                        /*
-                         
-                        //string ProfilePath = "Profiles";
-                        string ProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Google","Chrome","User Data","Default");
-                        string nameProfile = "";
-                        lvDSTK.Invoke((MethodInvoker)delegate
-                        {
-                            nameProfile = selectedItem.SubItems[2].Text;
-                        });
+                        // Đường dẫn đến thư mục chứa ChromeDriver
+                        var chromeDriverPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromeDriver.exe");
 
-                        if (!Directory.Exists(ProfilePath))
+                        // Đường dẫn đến thư mục chứa profile (thư mục tự tạo)
+                        var relativeProfilePath = Path.Combine("Profiles", "userProfile");
+                        var profilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativeProfilePath);
+
+                        // Xóa toàn bộ nội dung trong thư mục user data của profile
+                        if (Directory.Exists(profilePath))
                         {
-                            Directory.CreateDirectory(ProfilePath);
-                        }
-                        if (Directory.Exists(ProfilePath))
-                        {
-                            //DirectoryInfo dir = new DirectoryInfo(ProfilePath);
-                            
-                            if(Directory.Exists(ProfilePath + "\\" + nameProfile))
+                            foreach (var file in Directory.GetFiles(profilePath))
                             {
-                                Directory.Delete(ProfilePath + "\\" + nameProfile,true);
+                                File.Delete(file);
                             }
-                            options.AddArgument("user-data-dir=" + ProfilePath + "\\" + nameProfile);
-                            options.AddArgument("--profile-directory=" + nameProfile);
-                        };
+                            foreach (var dir in Directory.GetDirectories(profilePath))
+                            {
+                                Directory.Delete(dir, true);
+                            }
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(profilePath);
+                        }
 
-                        options.AddArgument("user-data-dir=" + ProfilePath + "\\" + nameProfile);
-                        options.AddArgument("--profile-directory=Default");
-                         */
-                        //options.AddArgument($"user-data-dir={Directory.GetCurrentDirectory}" +"/" + nameProfile);
-                        //options.AddArgument("--incognito");
-                        //options.AddArgument("--user-agent=" + userAgent);
+                        // Đường dẫn đến trình duyệt
+                        var orbitaBinaryLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "browser/chrome-112/chrome.exe");
+
+                        // Cấu hình UndetectedChromeOptions
+                        var options = new ChromeOptions();
+                        options.AddArgument("--disable-dev-shm-usage");
+                        options.AddArgument("--disable-gpu");
+                        options.AddArgument("--user-agent=" + userAgent);
+                        options.AddArgument("--disable-infobars");
                         options.AddArgument(addProxy);
-                        options.AddArguments(
-                            "--disable-extensions",
-                            "--disable-infobars",
-                            "--ignore-certificate-errors",
-                            "disable-popup-blocking",
-                            "--disable-infobars",
-                            "--lang=vi"
-                            );
-                        options.AddExcludedArguments(new List<string> { "enable-automation", "disable-extensions", "enable-logging" });
-                        options.AddUserProfilePreference("credentials_enable_service", false);
-                        options.AddUserProfilePreference("profile.password_manager_enabled", false);
-                        options.AddUserProfilePreference("disable-popup-blocking", "true");
-                        options.AddUserProfilePreference("download.prompt_for_download", "false");
-                        options.AddUserProfilePreference("safebrowsing.enabled", true);
-                        options.AddUserProfilePreference("safebrowsing.disable_download_protection", true);
-                        options.AddUserProfilePreference("plugins.plugins_disabled", new string[] { "Chrome PDF Viewer" });
-                        options.AddUserProfilePreference("profile.default_content_setting_values.automatic_downloads", 1);
 
+                        // Thiết lập đường dẫn của trình duyệt Orbita
+                        options.BinaryLocation = orbitaBinaryLocation;
+
+                        // Thiết lập ChromeDriverService với đường dẫn của ChromeDriver và profile
+                        var chromeService = ChromeDriverService.CreateDefaultService(chromeDriverPath);
+                        chromeService.HideCommandPromptWindow = true;
+
+                        // Đặt thư mục profile cho ChromeOptions
+                        options.AddArguments($"--user-data-dir={profilePath}");
 
                         //open chrome
                         IWebDriver driver = new ChromeDriver(chromeService, options);
+
+                        driver.Manage().Window.Position = new Point(0, 0); // Đặt vị trí cửa sổ tại góc trên cùng bên trái
+                        Size screenSize = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size; // Kích thước màn hình
+                        int width = (int)(screenSize.Width * 1); // Chiều rộng là 80% kích thước màn hình
+                        int height = (int)(screenSize.Height * 1); // Chiều cao là 80% kích thước màn hình
+                        driver.Manage().Window.Size = new Size(width, height);
+
                         int count = 0; // khởi tạo biến count để đếm số lần reload
                         bool isLoaded = false; // khởi tạo biến kiểm tra xem trang đã load thành công hay chưa
                         string url = "https://shopee.vn/buyer/login";
@@ -759,8 +790,8 @@ namespace ToolOpenChrome
                                         // Tìm phần tử
                                         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
                                         wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
-                                        IWebElement usernameLogin = driver.FindElement(By.XPath("//body/div[@id='main']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[2]/div[2]/div[1]/input[1]"));
-                                        IWebElement passwordLogin = driver.FindElement(By.XPath("//body/div[@id='main']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[2]/div[3]/div[1]/input[1]"));
+                                        IWebElement usernameLogin = driver.FindElement(By.XPath("//body/div[@id='main']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/form[1]/div[1]/div[1]/input[1]"));
+                                        IWebElement passwordLogin = driver.FindElement(By.XPath("//body/div[@id='main']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/form[1]/div[2]/div[1]/input[1]"));
                                         IWebElement btnLogin = driver.FindElement(By.XPath("//button[contains(text(),'Đăng nhập')]"));
 
                                         // Thực hiện các hành động liên quan đến phần tử
@@ -789,6 +820,14 @@ namespace ToolOpenChrome
                                     if (divText == "")
                                     {
                                         // Đăng nhập thành công
+                                        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                                        wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
+                                        // Mở tab thứ hai
+                                        ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
+                                        // Chuyển đến tab thứ hai
+                                        driver.SwitchTo().Window(driver.WindowHandles[1]);
+                                        string LoadUrl = "https://shopee.vn";
+                                        driver.Navigate().GoToUrl(url);
                                         login_shopee_success();
                                     }
                                     else
@@ -835,6 +874,7 @@ namespace ToolOpenChrome
                             {
                                 selectedItem.SubItems[5].Text = "Vui lòng thử lại";
                             });
+                            count_TaskRun = 0;
                         }
                         else
                         {
@@ -842,23 +882,22 @@ namespace ToolOpenChrome
                             {
                                 selectedItem.SubItems[5].Text = string.Format("Lỗi proxy và chạy lại lần {0}", count_TaskRun);
                             });
-                        }
-                        Thread.Sleep(2000);
-
-                        if (count_TaskRun < 3)
-                        {
-                            if (lvDSTK.InvokeRequired)
+                            if (count_TaskRun < 3)
                             {
-                                lvDSTK.Invoke((MethodInvoker)delegate
+                                if (lvDSTK.InvokeRequired)
+                                {
+                                    lvDSTK.Invoke((MethodInvoker)delegate
+                                    {
+                                        start_RunTask();
+                                    });
+                                }
+                                else
                                 {
                                     start_RunTask();
-                                });
-                            }
-                            else
-                            {
-                                start_RunTask();
+                                }
                             }
                         }
+                        Thread.Sleep(2000);
                     }
                     Invoke((MethodInvoker)delegate
                     {
@@ -936,7 +975,7 @@ namespace ToolOpenChrome
         }
         //get proxy
         int n_requset_sc;
-        string TmProxy;
+        string ProxyIP = "";
         private string RequestPost(string Param944, string Param945)
         {
             string text = "";
@@ -993,7 +1032,7 @@ namespace ToolOpenChrome
 
             if (proxy == "")
             {
-                TmProxy = "";
+                ProxyIP = "";
                 if (!string.IsNullOrEmpty(value) && int.TryParse(value, out int result))
                 {
                     n_requset_sc = result;
@@ -1010,18 +1049,73 @@ namespace ToolOpenChrome
             else
             {
                 n_requset_sc = 0;
-                TmProxy = proxy;
+                ProxyIP = proxy;
                 //MessageBox.Show(proxy);
                 //MessageBox.Show("get ip success");
             }
         }
+        private void GetWwProxy()
+        {
+            try
+            {
+                GetInfoChange();
+                string apiKey = Key_proxy;
+                HttpClient httpClient = new HttpClient();
 
+                // Gửi đồng thời hai yêu cầu HTTP để lấy thông tin proxy có sẵn và thông tin proxy hiện tại
+                var availableTask = httpClient.GetAsync($"https://wwproxy.com/api/client/proxy/available?key={apiKey}&provinceId=-1");
+                var currentTask = httpClient.GetAsync($"https://wwproxy.com/api/client/proxy/current?key={apiKey}");
+
+                // Đợi cả hai yêu cầu hoàn thành bằng cách sử dụng GetResult()
+                HttpResponseMessage availableResponse = availableTask.GetAwaiter().GetResult();
+                HttpResponseMessage currentResponse = currentTask.GetAwaiter().GetResult();
+
+                // Xử lý kết quả của yêu cầu lấy thông tin proxy có sẵn
+                if (availableResponse.IsSuccessStatusCode)
+                {
+                    string availableContent = availableResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    JObject availableData = JObject.Parse(availableContent);
+
+                    // Trích xuất thông tin proxy từ phản hồi
+                    string ipProxy = availableData["data"]?["proxy"]?.ToString();
+                    ProxyIP = ipProxy ?? "";
+
+                    // Hiển thị thông tin proxy trong MessageBox (nếu cần)
+                }
+                else
+                {
+                    string currentContent = currentResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    JObject currentData = JObject.Parse(currentContent);
+
+                    // Trích xuất thời gian nextChange từ phản hồi
+                    string nextChangeString = currentData["data"]?["nextChange"]?.ToString();
+
+                    if (!string.IsNullOrEmpty(nextChangeString))
+                    {
+                        DateTime nextChange = DateTime.Parse(nextChangeString);
+                        DateTime currentTime = DateTime.Now;
+
+                        // Tính toán thời gian đến thời điểm thay đổi tiếp theo tính bằng giây
+                        int secondsUntilNextChange = (int)Math.Max((nextChange - currentTime).TotalSeconds, 0);
+                        n_requset_sc = secondsUntilNextChange;
+                        //MessageBox.Show(n_requset_sc.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                n_requset_sc = -1;
+                MessageBox.Show($"Vui lòng xem lại proxy");
+            }
+        }
 
         // stop and close chrome
         private bool stopRequested = false;
         private void btnStop_Click(object sender, EventArgs e)
         {
+            //GetWwProxy();
             stopRequested = true;
+            n_requset_sc = -1;
             //foreach (Thread t in runningThreads)
             //{
             //    t.Abort();
@@ -1050,13 +1144,20 @@ namespace ToolOpenChrome
         {
             //ChangeMAC();
 
-
             // Tạo một đối tượng của SecondForm
             //infoPC InfoPC = new infoPC();
 
             // Hiển thị form
             //InfoPC.Show();
             MessageBox.Show("Tính năng này đang phát triển thêm");
+            /*
+            var driverExecutablePath = $@"chromedriver.exe";
+            _driver = UndetectedChromeDriver.Create(
+                driverExecutablePath: driverExecutablePath,
+                // hide selenium command prompt window  
+                hideCommandPromptWindow: true);
+            _driver.GoToUrl("https://nowsecure.nl");
+             */
         }
 
         // btn select all item
@@ -1168,48 +1269,13 @@ namespace ToolOpenChrome
         private void btnUpdateChrome_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Vui lòng đợi cập nhật...");
-
-            // Lấy phiên bản Chrome từ Registry
-            string chromeVersion = GetInstalledChromeVersion();
-
-            if (!string.IsNullOrEmpty(chromeVersion))
-            {
-                // Tìm phiên bản tương ứng của ChromeDriver dựa trên phần đầu phiên bản Chrome (chẳng hạn "91")
-                string chromeDriverVersion = GetCompatibleChromeDriverVersion(chromeVersion);
-
-                if (!string.IsNullOrEmpty(chromeDriverVersion))
-                {
-                    // Tải xuống và cài đặt ChromeDriver
-                    string chromeDriverDownloadUrl = $"https://chromedriver.storage.googleapis.com/{chromeDriverVersion}/chromedriver_win32.zip";
-                    using (WebClient client = new WebClient())
-                    {
-                        client.DownloadFile(chromeDriverDownloadUrl, "chromedriver.zip");
-                    }
-
-                    // Giải nén và thay thế ChromeDriver
-                    string chromeDriverDirectory = "chromedriver";
-                    if (Directory.Exists(chromeDriverDirectory))
-                    {
-                        Directory.Delete(chromeDriverDirectory, true);
-                    }
-                    ZipFile.ExtractToDirectory("chromedriver.zip", chromeDriverDirectory);
-
-                    MessageBox.Show($"Đã cập nhật ChromeDriver lên phiên bản {chromeDriverVersion} phù hợp với Chrome {chromeVersion}.");
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy phiên bản ChromeDriver phù hợp.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Không tìm thấy phiên bản Chrome đã cài đặt.");
-            }
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            MessageBox.Show("update chrome ok");
         }
 
-        private string GetInstalledChromeVersion()
+        static string GetInstalledChromeVersion()
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Google\Chrome\BLBeacon"))
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Google\Chrome\BLBeacon"))
             {
                 if (key != null)
                 {
@@ -1219,18 +1285,14 @@ namespace ToolOpenChrome
             return null;
         }
 
-        private string GetCompatibleChromeDriverVersion(string chromeVersion)
+        static string GetChromeDriverVersion(string chromeVersion)
         {
-            string[] chromeVersionParts = chromeVersion.Split('.');
-            string majorVersion = chromeVersionParts[0];
-
-            string chromeDriverVersionsUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_" + majorVersion;
-
+            string chromeDriverVersionUrl = $"https://chromedriver.storage.googleapis.com/LATEST_RELEASE_{chromeVersion}";
             using (WebClient client = new WebClient())
             {
                 try
                 {
-                    return client.DownloadString(chromeDriverVersionsUrl).Trim();
+                    return client.DownloadString(chromeDriverVersionUrl).Trim();
                 }
                 catch (Exception ex)
                 {
