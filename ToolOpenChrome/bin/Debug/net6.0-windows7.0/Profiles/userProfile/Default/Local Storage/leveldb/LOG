@@ -1,4 +1,4 @@
-2024/04/27-05:18:27.573 9624 Creating DB C:\Project\ToolsAuto\ToolOpenChrome\bin\Debug\net6.0-windows7.0\Profiles\userProfile\Default\Local Storage\leveldb since it was missing.
-2024/04/27-05:18:27.726 9624 Reusing MANIFEST C:\Project\ToolsAuto\ToolOpenChrome\bin\Debug\net6.0-windows7.0\Profiles\userProfile\Default\Local Storage\leveldb/MANIFEST-000001
-2024/04/27-05:19:49.355 a754 Level-0 table #5: started
-2024/04/27-05:19:49.387 a754 Level-0 table #5: 453334 bytes OK
+2024/05/02-14:17:11.120 41dc Creating DB C:\Users\admin\Documents\GitHub\ToolsAuto\ToolOpenChrome\bin\Debug\net6.0-windows7.0\Profiles\userProfile\Default\Local Storage\leveldb since it was missing.
+2024/05/02-14:17:11.164 41dc Reusing MANIFEST C:\Users\admin\Documents\GitHub\ToolsAuto\ToolOpenChrome\bin\Debug\net6.0-windows7.0\Profiles\userProfile\Default\Local Storage\leveldb/MANIFEST-000001
+2024/05/02-14:18:33.462 6410 Level-0 table #5: started
+2024/05/02-14:18:33.495 6410 Level-0 table #5: 228997 bytes OK

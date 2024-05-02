@@ -619,7 +619,7 @@ namespace ToolOpenChrome
                             {
                                 selectedItem.SubItems[5].Text = "Đang đổi địa chỉ MAC";
                             });
-                            ChangeMAC();
+                            //ChangeMAC();
                         }
                         while (!CheckInternetConnection())
                         {
@@ -690,7 +690,7 @@ namespace ToolOpenChrome
 
                         driver.Manage().Window.Position = new Point(0, 0); // Đặt vị trí cửa sổ tại góc trên cùng bên trái
                         Size screenSize = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size; // Kích thước màn hình
-                        int width = (int)(screenSize.Width * 1); // Chiều rộng là 80% kích thước màn hình
+                        int width = (int)(screenSize.Width * 0.45); // Chiều rộng là 80% kích thước màn hình
                         int height = (int)(screenSize.Height * 1); // Chiều cao là 80% kích thước màn hình
                         driver.Manage().Window.Size = new Size(width, height);
 
