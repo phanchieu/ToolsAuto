@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "51Hx35RHGcrpGWHA9ux9wWIax7Lz6MIgE/j4C+amjmldaTgIVIehxEF+0Yz5rAzIBJMWrNc6wpJAD85bQeGjng==",
+  "dgSpecHash": "4pbf5u5cLrvrEDsBD++W8hdkwoitL3ObU+VDCzWs+gWIIzI71c3z3wWpPyxo0oIBrmZ6L9bF7xd1Geb1MeOE8w==",
   "success": true,
-  "projectFilePath": "D:\\updateTool\\ToolAuto\\ToolOpenChrome\\SUPER-AUTO-BASIC.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Documents\\GitHub\\ToolsAuto\\ToolOpenChrome\\SUPER-AUTO-BASIC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\anglesharp\\1.0.4\\anglesharp.1.0.4.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
