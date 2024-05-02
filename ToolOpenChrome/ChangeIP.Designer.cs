@@ -36,7 +36,11 @@
             btnCloseChangeIp = new Button();
             cb_changeInfoPC = new CheckBox();
             cb_changeMAC = new CheckBox();
+            groupBox2 = new GroupBox();
+            rtxt_wwproxy = new RichTextBox();
+            ra_Chose_wwproxy = new RadioButton();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // ra_Chose_tmproxy
@@ -73,7 +77,7 @@
             // 
             // btn_saveChangeIp
             // 
-            btn_saveChangeIp.Location = new Point(157, 188);
+            btn_saveChangeIp.Location = new Point(153, 295);
             btn_saveChangeIp.Name = "btn_saveChangeIp";
             btn_saveChangeIp.Size = new Size(75, 27);
             btn_saveChangeIp.TabIndex = 2;
@@ -83,7 +87,7 @@
             // 
             // btnCloseChangeIp
             // 
-            btnCloseChangeIp.Location = new Point(252, 188);
+            btnCloseChangeIp.Location = new Point(252, 295);
             btnCloseChangeIp.Name = "btnCloseChangeIp";
             btnCloseChangeIp.Size = new Size(75, 27);
             btnCloseChangeIp.TabIndex = 3;
@@ -95,7 +99,7 @@
             // 
             cb_changeInfoPC.AutoSize = true;
             cb_changeInfoPC.ForeColor = SystemColors.ButtonHighlight;
-            cb_changeInfoPC.Location = new Point(12, 136);
+            cb_changeInfoPC.Location = new Point(12, 275);
             cb_changeInfoPC.Name = "cb_changeInfoPC";
             cb_changeInfoPC.Size = new Size(125, 19);
             cb_changeInfoPC.TabIndex = 5;
@@ -106,19 +110,53 @@
             // 
             cb_changeMAC.AutoSize = true;
             cb_changeMAC.ForeColor = SystemColors.ButtonHighlight;
-            cb_changeMAC.Location = new Point(12, 161);
+            cb_changeMAC.Location = new Point(12, 300);
             cb_changeMAC.Name = "cb_changeMAC";
             cb_changeMAC.Size = new Size(128, 19);
             cb_changeMAC.TabIndex = 6;
             cb_changeMAC.Text = "Đổi thông tin MAC";
             cb_changeMAC.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(rtxt_wwproxy);
+            groupBox2.ForeColor = SystemColors.Control;
+            groupBox2.Location = new Point(12, 161);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(315, 93);
+            groupBox2.TabIndex = 8;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Key wwproxy";
+            // 
+            // rtxt_wwproxy
+            // 
+            rtxt_wwproxy.Location = new Point(6, 22);
+            rtxt_wwproxy.Name = "rtxt_wwproxy";
+            rtxt_wwproxy.Size = new Size(303, 63);
+            rtxt_wwproxy.TabIndex = 0;
+            rtxt_wwproxy.Text = "";
+            // 
+            // ra_Chose_wwproxy
+            // 
+            ra_Chose_wwproxy.AutoSize = true;
+            ra_Chose_wwproxy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            ra_Chose_wwproxy.ForeColor = SystemColors.ButtonHighlight;
+            ra_Chose_wwproxy.Location = new Point(12, 136);
+            ra_Chose_wwproxy.Name = "ra_Chose_wwproxy";
+            ra_Chose_wwproxy.Size = new Size(103, 19);
+            ra_Chose_wwproxy.TabIndex = 7;
+            ra_Chose_wwproxy.TabStop = true;
+            ra_Chose_wwproxy.Text = "wwproxy.com";
+            ra_Chose_wwproxy.UseVisualStyleBackColor = true;
+            // 
             // ChangeIP
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(339, 227);
+            ClientSize = new Size(340, 344);
+            Controls.Add(groupBox2);
+            Controls.Add(ra_Chose_wwproxy);
             Controls.Add(cb_changeMAC);
             Controls.Add(cb_changeInfoPC);
             Controls.Add(btnCloseChangeIp);
@@ -134,6 +172,7 @@
             Text = "Cài đặt IP";
             Load += ChangeIP_Load;
             groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -147,5 +186,8 @@
         private Button btnCloseChangeIp;
         private CheckBox cb_changeInfoPC;
         private CheckBox cb_changeMAC;
+        private GroupBox groupBox2;
+        private RichTextBox rtxt_wwproxy;
+        private RadioButton ra_Chose_wwproxy;
     }
 }

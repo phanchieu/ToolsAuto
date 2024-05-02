@@ -64,7 +64,7 @@ namespace ToolOpenChrome
                     bool data_autoBasicShopee = res.mes.autoBasicShopee;
 
                     // Display response in a label or text box
-                    if (data_autoBasicShopee && codePc == data_codePc)
+                    if (data_autoBasicShopee)
                     {
                         DialogResult = DialogResult.OK;
                     }

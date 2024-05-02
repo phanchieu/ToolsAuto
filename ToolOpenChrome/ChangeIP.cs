@@ -23,7 +23,16 @@ namespace ToolOpenChrome
         private void btn_saveChangeIp_Click(object sender, EventArgs e)
         {
             // Tạo đối tượng dữ liệu
-            var data = new { ChoseIP = ra_Chose_tmproxy.Text, Key_proxy = rtxt_tmproxy.Text, ChangeInfoPC = cb_changeInfoPC.Checked, ChangeInfoMAC = cb_changeMAC.Checked };
+            var data = new { ChoseIP = "", Key_proxy = "", ChangeInfoPC = false, ChangeInfoMAC = false };
+            if (ra_Chose_tmproxy.Checked)
+            {
+                data = new { ChoseIP = ra_Chose_tmproxy.Text, Key_proxy = rtxt_tmproxy.Text, ChangeInfoPC = cb_changeInfoPC.Checked, ChangeInfoMAC = cb_changeMAC.Checked };
+
+            }
+            else
+            {
+                data = new { ChoseIP = ra_Chose_wwproxy.Text, Key_proxy = rtxt_wwproxy.Text, ChangeInfoPC = cb_changeInfoPC.Checked, ChangeInfoMAC = cb_changeMAC.Checked };
+            }
 
             // Chuyển đổi đối tượng thành chuỗi JSON
             var json = JsonConvert.SerializeObject(data);
@@ -78,15 +87,30 @@ namespace ToolOpenChrome
                     var choseIP = choseIPToken.ToString();
                     // Xử lý dữ liệu ở đây
                     //MessageBox.Show(choseIP);
-                    ra_Chose_tmproxy.Text = choseIP;
+                    //ra_Chose_tmproxy.Text = choseIP;
+                    if(choseIP == "tmproxy.com")
+                    {
+                        ra_Chose_tmproxy.Checked = true;
+                        if (jsonData.TryGetValue("Key_proxy", out JToken? Key_proxyToken))
+                        {
+                            var Key_proxy = Key_proxyToken.ToString();
+                            // Xử lý dữ liệu ở đây
+                            //MessageBox.Show(Key_proxy);
+                            rtxt_tmproxy.Text = Key_proxy;
+                        }
+                    }
+                    else
+                    {
+                        ra_Chose_wwproxy.Checked = true;
+                        if (jsonData.TryGetValue("Key_proxy", out JToken? Key_proxyToken))
+                        {
+                            var Key_proxy = Key_proxyToken.ToString();
+                            // Xử lý dữ liệu ở đây
+                            //MessageBox.Show(Key_proxy);
+                            rtxt_wwproxy.Text = Key_proxy;
+                        }
+                    }
 
-                }
-                if (jsonData.TryGetValue("Key_proxy", out JToken? Key_proxyToken))
-                {
-                    var Key_proxy = Key_proxyToken.ToString();
-                    // Xử lý dữ liệu ở đây
-                    //MessageBox.Show(Key_proxy);
-                    rtxt_tmproxy.Text = Key_proxy;
                 }
                 if (jsonData.TryGetValue("ChangeInfoPC", out JToken? ChangeInfoPCToken))
                 {
@@ -103,7 +127,6 @@ namespace ToolOpenChrome
                     cb_changeMAC.Checked = ChangeInfoMAC;
 
                 }
-
             }
         }
     }
